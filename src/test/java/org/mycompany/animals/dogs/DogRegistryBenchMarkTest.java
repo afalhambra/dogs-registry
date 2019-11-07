@@ -1,9 +1,9 @@
 package org.mycompany.animals.dogs;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mycompany.animals.dogs.domain.DogsBreedEnum;
-import org.openjdk.jmh.annotations.*;
+import org.openjdk.jmh.annotations.Benchmark;
+import org.openjdk.jmh.annotations.Mode;
 import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
@@ -13,7 +13,7 @@ import org.openjdk.jmh.runner.options.TimeValue;
 import javax.xml.bind.JAXBException;
 import java.util.concurrent.TimeUnit;
 
-public class DogRegistryBenchMark {
+public class DogRegistryBenchMarkTest {
 
     static AbstractFactory abstractFactory;
     static Registry dogRegistry;
