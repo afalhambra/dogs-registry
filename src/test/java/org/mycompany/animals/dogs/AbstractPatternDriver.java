@@ -1,5 +1,8 @@
 package org.mycompany.animals.dogs;
 
+import org.mycompany.animals.AnimalFactory;
+import org.mycompany.animals.AnimalType;
+import org.mycompany.animals.FactoryProvider;
 import org.mycompany.animals.dogs.domain.Dog;
 import org.mycompany.animals.dogs.domain.DogBreed;
 
@@ -10,11 +13,11 @@ import java.util.function.Predicate;
 
 public class AbstractPatternDriver {
     public static void main(String[] args) throws JAXBException {
-        AbstractFactory abstractFactory;
+        AnimalFactory animalFactory;
         
         //creating dog
-        abstractFactory = FactoryProvider.getFactory(AnimalType.DOG);
-        Registry dogRegistry = (Registry) abstractFactory.load("target/classes/dogs.xml");
+        animalFactory = FactoryProvider.getFactory(AnimalType.DOG);
+        DogRegistry dogRegistry = (DogRegistry) animalFactory.load("target/classes/dogs.xml");
 
         System.out.println("Average weight for GreyBound is: " + dogRegistry.averageWeight(DogBreed.GREYHOUND));
 

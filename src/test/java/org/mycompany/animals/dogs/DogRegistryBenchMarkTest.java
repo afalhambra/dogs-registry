@@ -1,6 +1,9 @@
 package org.mycompany.animals.dogs;
 
 import org.junit.jupiter.api.Test;
+import org.mycompany.animals.AnimalFactory;
+import org.mycompany.animals.AnimalType;
+import org.mycompany.animals.FactoryProvider;
 import org.mycompany.animals.dogs.domain.DogBreed;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Mode;
@@ -15,14 +18,14 @@ import java.util.concurrent.TimeUnit;
 
 public class DogRegistryBenchMarkTest {
 
-    static final String dogsFile = "dogs.xml";
-    static AbstractFactory abstractFactory;
-    static Registry dogRegistry;
+    static final String dogsFile = "src/test/resources/dogs.xml";
+    static AnimalFactory animalFactory;
+    static DogRegistry dogRegistry;
 
     static  {
-        abstractFactory = FactoryProvider.getFactory(AnimalType.DOG);
+        animalFactory = FactoryProvider.getFactory(AnimalType.DOG);
         try {
-            dogRegistry = (Registry) abstractFactory.load(dogsFile);
+            dogRegistry = (DogRegistry) animalFactory.load(dogsFile);
         } catch (JAXBException e) {
             e.printStackTrace();
         }

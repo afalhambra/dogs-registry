@@ -3,6 +3,9 @@ package org.mycompany.animals.dogs;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
+import org.mycompany.animals.AnimalFactory;
+import org.mycompany.animals.AnimalType;
+import org.mycompany.animals.FactoryProvider;
 import org.mycompany.animals.dogs.config.DogRegistryConfig;
 import org.mycompany.animals.dogs.domain.Dog;
 import org.mycompany.animals.dogs.domain.DogBreed;
@@ -21,10 +24,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class DogRegistryTest {
 
-    private static final Logger log = LoggerFactory.getLogger(DogRegistry.class);
+    private static final Logger log = LoggerFactory.getLogger(DogRegistryImpl.class);
     final static String dogsFile =  "src/test/resources/dogs.xml";
-    static AbstractFactory abstractFactory;
-    static Registry dogRegistry;
+    static AnimalFactory animalFactory;
+    static DogRegistry dogRegistry;
     static BiConsumer<DogBreed, Double> breedEnumDoubleBiConsumer = (breed, avgWeight) -> {
         switch (breed){
             case RHODESIAN_RIDGEBACK:
@@ -61,8 +64,8 @@ class DogRegistryTest {
 
     @BeforeAll
     public static void init() throws JAXBException {
-        abstractFactory = FactoryProvider.getFactory(AnimalType.DOG);
-        dogRegistry = (Registry) abstractFactory.load(dogsFile);
+        animalFactory = FactoryProvider.getFactory(AnimalType.DOG);
+        dogRegistry = (DogRegistry) animalFactory.load(dogsFile);
         DogRegistryConfig.setEnableLogging();
     }
 

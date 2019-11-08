@@ -17,9 +17,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Clase Java para anonymous complex type.
+ * <p>Java Enum Class for complex type Dogs.
  * 
- * <p>El siguiente fragmento de esquema especifica el contenido que se espera que haya en esta clase.
+ * <p>Below schema fragment specifies the expected content to be for this class.
  * 
  * <pre>
  * &lt;complexType&gt;
@@ -46,7 +46,7 @@ import javax.xml.bind.annotation.XmlType;
  * &lt;/complexType&gt;
  * </pre>
  * 
- * 
+ * @author Antonio Fernandez Alhambra
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
@@ -77,7 +77,7 @@ public class Dogs {
      * Objects of the following type(s) are allowed in the list
      * {@link Dog }
      * 
-     * 
+     * @return List of the dogs
      */
     public List<Dog> getDogs() {
         if (dog == null) {

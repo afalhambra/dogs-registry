@@ -14,10 +14,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Clase Java para dogsBreedEnum.
+ * <p>Java Enum Class for dogsBreedEnum.
  * 
- * <p>El siguiente fragmento de esquema especifica el contenido que se espera que haya en esta clase.
- * <p>
+ * <p>Below schema fragment specifies the expected content to be for this class.
  * <pre>
  * &lt;simpleType name="dogsBreedEnum"&gt;
  *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
@@ -33,7 +32,8 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/restriction&gt;
  * &lt;/simpleType&gt;
  * </pre>
- * 
+ *
+ * @author Antonio Fernandez Alhambra
  */
 @XmlType(name = "dogsBreedEnum")
 @XmlEnum
@@ -63,10 +63,27 @@ public enum DogBreed {
         value = v;
     }
 
+    /**
+     * Gets the value as a String from a particular Enum.
+     *
+     * @return
+     *     possible object is
+     *     {@link String }
+     *
+     */
     public String value() {
         return value;
     }
 
+    /**
+     * Gets the DogBreed Enum type from a String passed as argument.
+     *
+     * @param v String argument to specify the name of the breed
+     * @return
+     *     possible object is
+     *     {@link org.mycompany.animals.dogs.domain.DogBreed }
+     *
+     */
     public static DogBreed fromValue(String v) {
         for (DogBreed c: DogBreed.values()) {
             if (c.value.equals(v)) {

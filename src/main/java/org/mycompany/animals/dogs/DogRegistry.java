@@ -1,68 +1,48 @@
 package org.mycompany.animals.dogs;
 
-import org.mycompany.animals.dogs.config.DogRegistryConfig;
 import org.mycompany.animals.dogs.domain.Dog;
-import org.mycompany.animals.dogs.domain.DogBreed;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.EnumMap;
+import java.util.List;
 import java.util.function.Predicate;
 
-import static java.util.stream.Collectors.toList;
+/**
+ * Public interface with all the methods required for querying and registering a particular animal.
+ * @param <T> Enum type to implement depending of the breed type
+ */
+public interface DogRegistry<T extends Enum<T>> {
 
-public class DogRegistry implements Registry<DogBreed> {
+    /**
+     * Computes an average weight for a particular breed accepting breed as a parameter
+     * @param breed Breed type object to computes the average.
+     * @return Weight average of this particular breed.
+     */
+    double averageWeight(T breed);
 
-    private static final Logger log = LoggerFactory.getLogger(DogRegistry.class);
+    /**
+     * Returns average weight per breed for all breeds
+     * @return {@link java.util.EnumMap} Where T is
+     * the key used for this class and the value is a {@link java.lang.Double} object as the average
+     * weight
+     */
+    EnumMap<T, Double> averageWeightPerBreed();
 
-    private Map<String, List<Dog>> dogsData = new HashMap<>();
+    /**
+     * Returns a list of all dogs based on some predicate, which
+     * is passed as a parameter
+     * @param predicate {@link java.util.function.Predicate}
+     * containing the predicate to be queried against the list of dogs.
+     * @return {@link java.util.List} List of dog which satisfy
+     * the condition passed as argument
+     */
+    List<Dog> dogsByCondition(Predicate<Dog> predicate);
 
-    private DogRegistryConfig config = new DogRegistryConfig();
-
-    DogRegistry(String fileName, List<Dog> dogs) { dogsData.put(fileName, dogs); }
-
-    @Override
-    public double averageWeight(DogBreed breed) {
-        OptionalDouble optionalDouble = dogsData.values().stream()
-                .flatMap(List::stream)
-                .filter( dog -> dog.getBreed() == breed )
-                .mapToDouble(Dog::getWeight)
-                .average();
-        return optionalDouble.orElse(0);
-    }
-
-    @Override
-    public EnumMap<DogBreed, Double> averageWeightPerBreed() {
-        EnumMap<DogBreed, Double> enumMap = new EnumMap<>(DogBreed.class);
-        for (Dog dog : dogsData.values().iterator().next()){
-            enumMap.put(dog.getBreed(), averageWeight(dog.getBreed()));
-        }
-        return enumMap;
-    }
-
-    @Override
-    public List<Dog> dogsByCondition(Predicate<Dog> predicate) {
-        return dogsData.values().stream()
-                .flatMap(List::stream)
-                .filter(predicate)
-                .collect(toList());
-    }
-
-    @Override
-    public Dog oldestDogAfterDate(LocalDate date) {
-        Optional<Dog> optionalDog = dogsData.values().stream()
-                .flatMap(List::stream)
-                .filter( dog -> {
-                    LocalDate dob = LocalDate.parse(dog.getDateOfBirth(), config.getDateFormat());
-                    return dob.isAfter(date);
-                })
-                .reduce( (dogA, dogB) -> {
-                    LocalDate dobA = LocalDate.parse(dogA.getDateOfBirth(), config.getDateFormat());
-                    LocalDate dobB = LocalDate.parse(dogB.getDateOfBirth(), config.getDateFormat());
-                    return (dobA.isBefore(dobB)) ? dogA : dogB;
-                });
-        return optionalDog.orElse(null);
-    }
+    /**
+     * Returns the oldest dog born after a certain date passed as argument
+     * @param date {@link java.time.LocalDate}
+     * @return Oldest {@link org.mycompany.animals.dogs.domain.Dog} object born after the date passed as
+     * argument.
+     */
+    Dog oldestDogAfterDate(LocalDate date);
 }

@@ -1,6 +1,6 @@
 package org.mycompany.animals.dogs;
 
-import org.mycompany.animals.dogs.config.DogRegistryConfig;
+import org.mycompany.animals.AnimalFactory;
 import org.mycompany.animals.dogs.domain.Dog;
 import org.mycompany.animals.dogs.domain.Dogs;
 import org.slf4j.Logger;
@@ -12,12 +12,29 @@ import javax.xml.bind.Unmarshaller;
 import java.io.File;
 import java.util.List;
 
-public class DogRegistryFactory implements AbstractFactory<Registry> {
+/**
+ * Concrete implementation of the {@link AnimalFactory} class for the Dogs
+ * objects
+ *
+ *  @author Antonio Fernandez Alhambra
+ */
+public class DogRegistryFactory implements AnimalFactory<DogRegistry> {
 
+    /**
+     * Log instance used for logging purposes.
+     */
     private static final Logger log = LoggerFactory.getLogger(DogRegistryFactory.class);
 
+    /**
+     * Return a concrete implementation of the {@link DogRegistry} class
+     * for the Dog type and read and parse the file to be loaded in memory.
+     * @param fileName Name of the file to read the Dogs information from.
+     * @return {@link DogRegistryImpl} Concrete implementation of
+     * the {@link DogRegistry} class containing the list of dogs laded in memory
+     * @throws JAXBException in case any exception when dealing with the marshal/unmarshal of the XML file.
+     */
     @Override
-    public Registry load(String fileName) throws JAXBException {
+    public DogRegistry load(String fileName) throws JAXBException {
 
         File xmlFile = new File(fileName);
 
@@ -32,6 +49,6 @@ public class DogRegistryFactory implements AbstractFactory<Registry> {
 
         log.debug("Loaded file with " + dogList);
 
-        return new DogRegistry(fileName, dogList);
+        return new DogRegistryImpl(fileName, dogList);
     }
 }

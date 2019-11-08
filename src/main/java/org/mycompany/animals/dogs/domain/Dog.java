@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.*;
  * &lt;/complexType&gt;
  * </pre>
  * 
- * 
+ * @author Antonio Fernandez Alhambra
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "dog", propOrder = {
@@ -41,12 +41,24 @@ import javax.xml.bind.annotation.*;
 })
 public class Dog {
 
+    /**
+     * Date of birth of a Dog instance
+     */
     @XmlElement(required = true)
     protected String dateOfBirth;
+    /**
+     * Weight in Kilos of a Dog instance
+     */
     protected double weight;
+    /**
+     * Dog Breed of a Dog instance
+     */
     @XmlElement(required = true)
     @XmlSchemaType(name = "string")
     protected DogBreed breed;
+    /**
+     * Dog's name
+     */
     @XmlAttribute(name = "name")
     protected String name;
 
@@ -77,6 +89,7 @@ public class Dog {
     /**
      * Gets the weight property value.
      *
+     * @return Weight of the dog in Kilos
      */
     public double getWeight() {
         return weight;
@@ -85,6 +98,7 @@ public class Dog {
     /**
      * Defines weight property value.
      *
+     * @param value Sets the weight in kilos for a dog
      */
     public void setWeight(double value) {
         this.weight = value;

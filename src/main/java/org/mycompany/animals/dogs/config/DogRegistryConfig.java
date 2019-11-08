@@ -31,7 +31,7 @@ public class DogRegistryConfig {
 
     /**
      * <p>Set method to specify dateFormat field to use</p>
-     * @param dateFormat
+     * @param dateFormat String with the date format to be used and set
      */
     public void setDateFormat(String dateFormat) {
         this.dateFormat = dateFormat;
