@@ -12,9 +12,9 @@ import javax.xml.bind.annotation.*;
 
 
 /**
- * <p>Clase Java para dog complex type.
+ * <p>Java Class for dog complex type.
  * 
- * <p>El siguiente fragmento de esquema especifica el contenido que se espera que haya en esta clase.
+ * <p>Below schema fragment specifies the expected content to be for this class.
  * 
  * <pre>
  * &lt;complexType name="dog"&gt;
@@ -46,12 +46,12 @@ public class Dog {
     protected double weight;
     @XmlElement(required = true)
     @XmlSchemaType(name = "string")
-    protected DogsBreedEnum breed;
+    protected DogBreed breed;
     @XmlAttribute(name = "name")
     protected String name;
 
     /**
-     * Obtiene el valor de la propiedad dateOfBirth.
+     * Gets the dateOfBirth property value.
      *
      * @return
      *     possible object is
@@ -63,7 +63,7 @@ public class Dog {
     }
 
     /**
-     * Define el valor de la propiedad dateOfBirth.
+     * Defines dateOfBirth property value.
      *
      * @param value
      *     allowed object is
@@ -75,7 +75,7 @@ public class Dog {
     }
 
     /**
-     * Obtiene el valor de la propiedad weight.
+     * Gets the weight property value.
      *
      */
     public double getWeight() {
@@ -83,7 +83,7 @@ public class Dog {
     }
 
     /**
-     * Define el valor de la propiedad weight.
+     * Defines weight property value.
      *
      */
     public void setWeight(double value) {
@@ -91,31 +91,31 @@ public class Dog {
     }
 
     /**
-     * Obtiene el valor de la propiedad breed.
+     * Gets the breed property value.
      *
      * @return
      *     possible object is
-     *     {@link DogsBreedEnum }
+     *     {@link DogBreed }
      *
      */
-    public DogsBreedEnum getBreed() {
+    public DogBreed getBreed() {
         return breed;
     }
 
     /**
-     * Define el valor de la propiedad breed.
+     * Defines breed property value.
      *
      * @param value
      *     allowed object is
-     *     {@link DogsBreedEnum }
+     *     {@link DogBreed }
      *     
      */
-    public void setBreed(DogsBreedEnum value) {
+    public void setBreed(DogBreed value) {
         this.breed = value;
     }
 
     /**
-     * Obtiene el valor de la propiedad name.
+     * Gets the name property value.
      * 
      * @return
      *     possible object is
@@ -127,7 +127,7 @@ public class Dog {
     }
 
     /**
-     * Define el valor de la propiedad name.
+     * Defines name property value.
      * 
      * @param value
      *     allowed object is

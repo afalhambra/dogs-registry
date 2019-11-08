@@ -1,7 +1,7 @@
 package org.mycompany.animals.dogs;
 
 import org.junit.jupiter.api.Test;
-import org.mycompany.animals.dogs.domain.DogsBreedEnum;
+import org.mycompany.animals.dogs.domain.DogBreed;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Mode;
 import org.openjdk.jmh.runner.Runner;
@@ -15,13 +15,14 @@ import java.util.concurrent.TimeUnit;
 
 public class DogRegistryBenchMarkTest {
 
+    static final String dogsFile = "dogs.xml";
     static AbstractFactory abstractFactory;
     static Registry dogRegistry;
 
     static  {
         abstractFactory = FactoryProvider.getFactory(AnimalType.DOG);
         try {
-            dogRegistry = (Registry) abstractFactory.load("target/classes/dogs.xml");
+            dogRegistry = (Registry) abstractFactory.load(dogsFile);
         } catch (JAXBException e) {
             e.printStackTrace();
         }
@@ -49,6 +50,6 @@ public class DogRegistryBenchMarkTest {
 
     @Benchmark
     public void benchMarkAverageWeight(){
-        dogRegistry.averageWeight(DogsBreedEnum.GREYHOUND);
+        dogRegistry.averageWeight(DogBreed.GREYHOUND);
     }
 }

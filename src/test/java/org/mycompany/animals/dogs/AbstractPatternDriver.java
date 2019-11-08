@@ -1,7 +1,7 @@
 package org.mycompany.animals.dogs;
 
 import org.mycompany.animals.dogs.domain.Dog;
-import org.mycompany.animals.dogs.domain.DogsBreedEnum;
+import org.mycompany.animals.dogs.domain.DogBreed;
 
 import javax.xml.bind.JAXBException;
 import java.time.LocalDate;
@@ -16,11 +16,11 @@ public class AbstractPatternDriver {
         abstractFactory = FactoryProvider.getFactory(AnimalType.DOG);
         Registry dogRegistry = (Registry) abstractFactory.load("target/classes/dogs.xml");
 
-        System.out.println("Average weight for GreyBound is: " + dogRegistry.averageWeight(DogsBreedEnum.GREYHOUND));
+        System.out.println("Average weight for GreyBound is: " + dogRegistry.averageWeight(DogBreed.GREYHOUND));
 
-        System.out.println("Average weight for " + DogsBreedEnum.LABRADOR_RETRIEVER.value() + " is: " + dogRegistry.averageWeight(DogsBreedEnum.LABRADOR_RETRIEVER));
+        System.out.println("Average weight for " + DogBreed.LABRADOR_RETRIEVER.value() + " is: " + dogRegistry.averageWeight(DogBreed.LABRADOR_RETRIEVER));
 
-        System.out.println("Average weight for " + DogsBreedEnum.SHIBA_INU.value() + " is: " + dogRegistry.averageWeight(DogsBreedEnum.SHIBA_INU));
+        System.out.println("Average weight for " + DogBreed.SHIBA_INU.value() + " is: " + dogRegistry.averageWeight(DogBreed.SHIBA_INU));
 
         System.out.println("Average weight for all breeds: " + dogRegistry.averageWeightPerBreed());
 

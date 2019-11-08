@@ -1,8 +1,13 @@
 package org.mycompany.animals.dogs;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
+import org.mycompany.animals.dogs.config.DogRegistryConfig;
 import org.mycompany.animals.dogs.domain.Dog;
-import org.mycompany.animals.dogs.domain.DogsBreedEnum;
+import org.mycompany.animals.dogs.domain.DogBreed;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.xml.bind.JAXBException;
 import java.time.LocalDate;
@@ -16,46 +21,49 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class DogRegistryTest {
 
+    private static final Logger log = LoggerFactory.getLogger(DogRegistry.class);
+    final static String dogsFile =  "src/test/resources/dogs.xml";
     static AbstractFactory abstractFactory;
     static Registry dogRegistry;
-    static BiConsumer<DogsBreedEnum, Double> breedEnumDoubleBiConsumer = (key, value) -> {
-        switch (key){
+    static BiConsumer<DogBreed, Double> breedEnumDoubleBiConsumer = (breed, avgWeight) -> {
+        switch (breed){
             case RHODESIAN_RIDGEBACK:
-                assertEquals(38.0, value);
+                assertEquals(38.0, avgWeight);
                 break;
             case BERNESE_MOUNTAIN_DOG:
-                assertEquals(55.0, value);
+                assertEquals(55.0, avgWeight);
                 break;
             case SHIBA_INU:
-                assertEquals(12.25, value);
+                assertEquals(12.25, avgWeight);
                 break;
             case GERMAN_SHEPHERD:
-                assertEquals(24.400000000000002, value);
+                assertEquals(24.400000000000002, avgWeight);
                 break;
             case LABRADOR_RETRIEVER:
-                assertEquals(33.0, value);
+                assertEquals(33.0, avgWeight);
                 break;
             case GREYHOUND:
             case SIBERIAN_HUSKY:
-                assertEquals(29.0, value);
+                assertEquals(29.0, avgWeight);
                 break;
             case JAPANESE_SPITZ:
-                assertEquals(12.0, value);
+                assertEquals(12.0, avgWeight);
                 break;
             case BOHEMIAN_WIREHAIRED_POINTING_GRIFFON:
-                assertEquals(28.0, value);
+                assertEquals(28.0, avgWeight);
                 break;
             default:
                 fail("Non valid breed has been found");
                 break;
         }
-        System.out.println("Breed: " + key.value() + ", Average Weight: " + value);
+        log.debug("Breed: " + breed.value() + ", Average Weight: " + avgWeight);
     };
 
     @BeforeAll
     public static void init() throws JAXBException {
         abstractFactory = FactoryProvider.getFactory(AnimalType.DOG);
-        dogRegistry = (Registry) abstractFactory.load("target/classes/dogs.xml");
+        dogRegistry = (Registry) abstractFactory.load(dogsFile);
+        DogRegistryConfig.setEnableLogging();
     }
 
     @AfterAll
@@ -63,18 +71,17 @@ class DogRegistryTest {
         dogRegistry = null;
     }
 
-    @Test
-    void averageWeight() {
+    @ParameterizedTest
+    @EnumSource(DogBreed.class)
+    void averageWeight(DogBreed breed) {
         double avgWeight;
-        for (DogsBreedEnum breedEnum : DogsBreedEnum.values()){
-            avgWeight = dogRegistry.averageWeight(breedEnum);
-            breedEnumDoubleBiConsumer.accept(breedEnum, avgWeight);
-        }
+        avgWeight = dogRegistry.averageWeight(breed);
+        breedEnumDoubleBiConsumer.accept(breed, avgWeight);
     }
 
     @Test
     void averageWeightPerBreed() {
-        EnumMap<DogsBreedEnum, Double> enumMap = dogRegistry.averageWeightPerBreed();
+        EnumMap<DogBreed, Double> enumMap = dogRegistry.averageWeightPerBreed();
         enumMap.forEach(breedEnumDoubleBiConsumer);
     }
 
@@ -84,7 +91,7 @@ class DogRegistryTest {
         List<Dog> dogList = dogRegistry.dogsByCondition(predicate);
         assertEquals(1, dogList.size());
         assertEquals("Rex", dogList.get(0).getName());
-        System.out.println("List of Dogs with predicate: " + dogList);
+        log.debug("List of Dogs with predicate: " + dogList);
     }
 
     @Test
@@ -95,7 +102,7 @@ class DogRegistryTest {
         assertEquals("05-02-2005", dog.getDateOfBirth());
         assertEquals(38.0, dog.getWeight());
         assertEquals("Rhodesian Ridgeback", dog.getBreed().value());
-        System.out.println("Oldest Dog after " + date.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) +  " is: " + dog);
+        log.debug("Oldest Dog after " + date.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) +  " is: " + dog);
     }
 
 }

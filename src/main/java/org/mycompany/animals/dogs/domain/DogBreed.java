@@ -37,7 +37,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlType(name = "dogsBreedEnum")
 @XmlEnum
-public enum DogsBreedEnum {
+public enum DogBreed {
 
     @XmlEnumValue("Rhodesian Ridgeback")
     RHODESIAN_RIDGEBACK("Rhodesian Ridgeback"),
@@ -59,7 +59,7 @@ public enum DogsBreedEnum {
     BOHEMIAN_WIREHAIRED_POINTING_GRIFFON("Bohemian Wirehaired Pointing Griffon");
     private final String value;
 
-    DogsBreedEnum(String v) {
+    DogBreed(String v) {
         value = v;
     }
 
@@ -67,8 +67,8 @@ public enum DogsBreedEnum {
         return value;
     }
 
-    public static DogsBreedEnum fromValue(String v) {
-        for (DogsBreedEnum c: DogsBreedEnum.values()) {
+    public static DogBreed fromValue(String v) {
+        for (DogBreed c: DogBreed.values()) {
             if (c.value.equals(v)) {
                 return c;
             }
